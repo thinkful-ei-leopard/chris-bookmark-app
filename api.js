@@ -27,3 +27,9 @@ function deleteBookmark(id){
         method: 'DELETE'
     });
 }
+
+export default {
+    getBookmarks,
+    createBookmark,
+    deleteBookmark
+}

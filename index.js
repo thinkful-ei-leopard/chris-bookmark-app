@@ -96,7 +96,12 @@ const STORE = {
 
   function render(){
      if(STORE.adding === false){
-         let bookmarks = [...STORE.bookmarks]
+        let bookmarks = [...STORE.bookmarks]
+        
+        if(STORE.filter > 0){
+            bookmarks = STORE.bookmarks.filter(bookmark => bookmark.rating >= STORE.filter);
+        }
+
         const bookmarkListString = generateBookmarkListString(bookmarks);
         const initialView = generateInitialView();
         $('main').html(initialView);
@@ -162,8 +167,8 @@ const STORE = {
   function minimumRatingFilter(){
     //When option is selected, only display bookmarks with that rating or higher
     $('main').on('click', '#filter', event => {
-        let starSelected = $('#filter').val();
-        console.log(starSelected);
+        STORE.filter = $('#filter').val();
+        render();
     })
     
   }
