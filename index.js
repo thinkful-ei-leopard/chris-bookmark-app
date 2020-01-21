@@ -1,19 +1,19 @@
 const STORE = {
     bookmarks: [
       {
-        id: 'x56w',
-        title: 'Title 1',
+        id: cuid(),
+        title: 'Google',
         rating: 3,
-        url: 'http://www.title1.com',
-        description: 'lorem ipsum dolor sit',
+        url: 'http://www.google.com',
+        description: 'All of your searching needs',
         expanded: false
       },
       {
-        id: '6ffw',
-        title: 'Title 2',
+        id: cuid(),
+        title: 'Youtube',
         rating: 5,
-        url: 'http://www.title2.com',
-        description: 'dolorum tempore deserunt',
+        url: 'http://www.youtube.com',
+        description: 'Site full of videos',
         expanded: false
       } 
     ],
@@ -73,7 +73,7 @@ const STORE = {
     </div>`;
     }
     
-    return `<li class="bookmark" id="${bookmark.id}">
+    return `<li class="bookmark" data-item-id="${bookmark.id}">
     <p class="title">${bookmark.title}</p>
 
     <span class="fa fa-star"></span>
@@ -115,8 +115,24 @@ const STORE = {
     });
   }
 
-  function detailedView(){
+  const toggleExpandForBookmark = function (id) {
+    const foundBookmark = STORE.bookmarks.find(bookmark => bookmark.id === id);
+    foundBookmark.expanded = !foundBookmark.expanded;
+  };
+
+  const getItemIdFromElement = function (item) {
+    return $(item)
+      .closest('.bookmark')
+      .data('item-id');
+  };
+  
+  function expandView(){
     //When bookmark is clicked, render the expanded view of the selected bookmark
+    $('#bookmark-list').on('click', '.bookmark', event => {
+        const id = getItemIdFromElement(event.currentTarget);
+        toggleExpandForBookmark(id);
+        render();
+      });
   }
 
   function removeBookmark(){
@@ -130,7 +146,7 @@ const STORE = {
   function main(){
       render();
       addBookmark();
-      detailedView();
+      expandView();
       removeBookmark();
       minimumRatingFilter();
   }
