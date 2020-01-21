@@ -109,7 +109,7 @@ const STORE = {
 
   function addBookmark(){
     //When #add-button is clicked, render Add Bookmark Form View
-    $('.initial-view').on('click','#add-button', event => {
+    $('main').on('click','#add-button', event => {
         STORE.adding = true;
         render();
     });
@@ -128,15 +128,35 @@ const STORE = {
   
   function expandView(){
     //When bookmark is clicked, render the expanded view of the selected bookmark
-    $('#bookmark-list').on('click', '.bookmark', event => {
+    $('main').on('click', '.bookmark', event => {
         const id = getItemIdFromElement(event.currentTarget);
         toggleExpandForBookmark(id);
         render();
       });
   }
 
-  function removeBookmark(){
+  const deleteListItem = function (id){
+    const index = STORE.bookmarks.findIndex(item => item.id === id);
+    STORE.bookmarks.splice(index,1);
+  }
+
+  function handleDeleteButton(){
     //When #delete-button is clicked, remove the selected bookmark
+    $('main').on('click', '#delete-button', event => {
+        const id = getItemIdFromElement(event.currentTarget);
+        deleteListItem(id);
+        render();
+    });
+  }
+
+  function handleCancelButton(){
+    //When #cancel-button is clicked, go back to initial view
+    $('main').on('click','#cancel-button', event => {
+        event.preventDefault();
+        
+        STORE.adding = false;
+        render();
+    });
   }
 
   function minimumRatingFilter(){
@@ -147,7 +167,8 @@ const STORE = {
       render();
       addBookmark();
       expandView();
-      removeBookmark();
+      handleDeleteButton();
+      handleCancelButton();
       minimumRatingFilter();
   }
 
