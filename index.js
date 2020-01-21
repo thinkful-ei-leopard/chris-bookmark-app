@@ -1,4 +1,4 @@
-const store = {
+const STORE = {
     bookmarks: [
       {
         id: 'x56w',
@@ -22,12 +22,63 @@ const store = {
     filter: 0
   };
 
+  function generateInitialView(){
+      return `<section class="initial-view">
+      <div class="book-controls">
+          <button id="add-button">Add Boomark</button>
+          <select name="filter" id="filter">
+              <option value="0">Minimum Rating</option>
+              <option value="1">1 Star</option>
+              <option value="2">2 Star</option>
+              <option value="3">3 Star</option>
+              <option value="4">4 Star</option>
+              <option value="5">5 Star</option>
+          </select>
+      </div>
+      <ul class="bookmark-list">
+  
+      </ul>
+  </section>`;
+  }
+
+  function generateAddBookmarkView(){
+      return `<form id="add-bookmark-form" action="" method="post">
+      <label for="url-input">Add new Bookmark Url:</label>
+      <input type="url" id="url-input">
+      <div class="bookmark-info">
+          <input type="text" id="title-input" placeholder="Bookmark Title">
+          <div class="rating">
+              <span class="fa fa-star"><input type="radio" name="rating" id="str5" value="5"><label for="str5"></label></span>
+              <span class="fa fa-star"><input type="radio" name="rating" id="str4" value="4"><label for="str4"></label></span>
+              <span class="fa fa-star"><input type="radio" name="rating" id="str3" value="3"><label for="str3"></label></span>
+              <span class="fa fa-star"><input type="radio" name="rating" id="str2" value="2"><label for="str2"></label></span>
+              <span class="fa fa-star"><input type="radio" name="rating" id="str1" value="1"><label for="str1"></label></span>
+          </div>
+          <input type="text" id="description-input" placeholder="Add a description (optional)">
+          <div id="form-buttons">
+          <button id="cancel-button">Cancel</button>
+          <button id="create-button">Create</button>
+          </div>
+      </div>
+  </form>`
+  };
+
   function render(){
-     
+     if(STORE.adding === false){
+         const initialView = generateInitialView();
+         $('main').html(initialView);
+     } else if (STORE.adding === true){
+         const addBookmarkView = generateAddBookmarkView();
+         $('main').html(addBookmarkView);
+     }
   }
 
   function addBookmark(){
     //When #add-button is clicked, render Add Bookmark Form View
+    $('.initial-view').on('click','#add-button', event => {
+        STORE.adding = true;
+        render();
+    });
   }
 
   function detailedView(){
