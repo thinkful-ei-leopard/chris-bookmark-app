@@ -35,7 +35,7 @@ const STORE = {
               <option value="5">5 Star</option>
           </select>
       </div>
-      <ul class="bookmark-list">
+      <ul id="bookmark-list">
   
       </ul>
   </section>`;
@@ -63,13 +63,47 @@ const STORE = {
   </form>`
   };
 
+  const generateBookmarkElement = function(bookmark){
+    let expandedView = '';
+
+    if(bookmark.expanded){
+        expandedView = `<div class="expanded-view">
+        <p class="description">${bookmark.description}</p>
+        <a href="${bookmark.url}">Visit Site</a>
+    </div>`;
+    }
+    
+    return `<li class="bookmark" id="${bookmark.id}">
+    <p class="title">${bookmark.title}</p>
+
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+
+    <button id="delete-button">Delete Bookmark</button>
+    ${expandedView}
+    </li>`
+  }
+
+  const generateBookmarkListString = function (bookmarkList){
+      const bookmarks = bookmarkList.map(bookmark => generateBookmarkElement(bookmark));
+      return bookmarks.join('');
+  }
+
+
+
   function render(){
      if(STORE.adding === false){
-         const initialView = generateInitialView();
-         $('main').html(initialView);
+         let bookmarks = [...STORE.bookmarks]
+        const bookmarkListString = generateBookmarkListString(bookmarks);
+        const initialView = generateInitialView();
+        $('main').html(initialView);
+        $('#bookmark-list').html(bookmarkListString);
      } else if (STORE.adding === true){
-         const addBookmarkView = generateAddBookmarkView();
-         $('main').html(addBookmarkView);
+        const addBookmarkView = generateAddBookmarkView();
+        $('main').html(addBookmarkView);
      }
   }
 
