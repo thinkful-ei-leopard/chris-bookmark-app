@@ -17,8 +17,13 @@ function createBookmark(title, url, desc, rating){
     return fetch(`https://thinkful-list-api.herokuapp.com/chris/bookmarks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }, 
-        body: newBookmark})
+        body: newBookmark});
 }
 
 //DELETE bookmark
-
+function deleteBookmark(id){
+    return fetch(`https://thinkful-list-api.herokuapp.com/chris/bookmarks/${id}`,
+    {
+        method: 'DELETE'
+    });
+}
