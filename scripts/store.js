@@ -1,4 +1,4 @@
-//import api from './scripts/api.js'
+import api from './api.js'
 
 const bookmarks = [
     {
@@ -22,14 +22,38 @@ const bookmarks = [
   let error = null;
   let filter = 0
 
-// function setAddingToTrue(){
-//     adding = true;
-// }
+function toggleAddingBoolean(){
+    this.adding = !this.adding;
+}
+
+function deleteListItem(id){
+    const index = this.bookmarks.findIndex(item => item.id === id);
+    this.bookmarks.splice(index,1);
+}
+
+function setFilterVal(val){
+    this.filter = val;
+}
+
+function toggleExpandForBookmark(id) {
+    const foundBookmark = this.bookmarks.find(bookmark => bookmark.id === id);
+    foundBookmark.expanded = !foundBookmark.expanded;
+};
+
+function getBookmarkIdFromElement(item) {
+    return $(item)
+      .closest('.bookmark')
+      .data('item-id');
+};
 
 export default {
     bookmarks,
     adding,
     error,
     filter,
-    //setAddingToTrue
+    toggleAddingBoolean,
+    deleteListItem,
+    setFilterVal,
+    toggleExpandForBookmark,
+    getBookmarkIdFromElement
 }
