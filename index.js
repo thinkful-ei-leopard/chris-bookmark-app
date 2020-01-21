@@ -161,6 +161,11 @@ const STORE = {
 
   function minimumRatingFilter(){
     //When option is selected, only display bookmarks with that rating or higher
+    $('main').on('click', '#filter', event => {
+        let starSelected = $('#filter').val();
+        console.log(starSelected);
+    })
+    
   }
 
   function main(){
