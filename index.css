@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
+li {
+    list-style-type: none;
+}
+
+.bookmark-info {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+}

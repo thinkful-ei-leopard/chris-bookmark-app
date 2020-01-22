@@ -1,9 +1,6 @@
-
 //GET bookmarks
 function getBookmarks(){
     return fetch(`https://thinkful-list-api.herokuapp.com/chris/bookmarks`)
-        .then(res => res.json())
-        .then(data => console.log(data))
 }
 
 //POST bookmarks
